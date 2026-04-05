@@ -47,18 +47,12 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 
 /*
- * @AllArgsConstructor
- * - 모든 필드를 파라미터로 받는 생성자를 만들어준다.
- * - @Builder가 내부적으로 이 생성자를 사용하여 객체를 조립한다.
- */
-@AllArgsConstructor
-
-/*
  * @Builder
  * - 빌더 패턴(Builder Pattern)을 자동 생성해준다.
  * - 필드가 많을 때 생성자 대신 .name("홍길동").email("test@test.com") 형태로
  *   어떤 값이 어떤 필드에 들어가는지 명확하게 객체를 만들 수 있다.
  */
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
 public class Member extends BaseEntity {
 

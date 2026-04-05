@@ -23,7 +23,7 @@ import umc.study.umc_mission.global.common.BaseEntity;
 @Entity  // JPA 엔티티 선언. DB의 region 테이블과 매핑된다.
 @Table(name = "region")  // 테이블 이름을 "region"으로 명시.
 @NoArgsConstructor(access = AccessLevel.PROTECTED)  // JPA용 기본 생성자. 외부 직접 생성 차단.
-@AllArgsConstructor  // Builder 내부에서 사용하는 전체 필드 생성자.
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder  // 빌더 패턴 자동 생성.
 public class Region extends BaseEntity {
 

@@ -30,7 +30,7 @@ import umc.study.umc_mission.global.common.BaseEntity;
 @Entity  // JPA 엔티티 선언. DB의 member_likes 테이블과 매핑된다.
 @Table(name = "member_likes")  // 테이블 이름을 "member_likes"로 명시.
 @NoArgsConstructor(access = AccessLevel.PROTECTED)  // JPA용 기본 생성자 (외부 호출 차단).
-@AllArgsConstructor  // Builder 내부에서 사용하는 전체 필드 생성자.
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder  // 빌더 패턴 자동 생성.
 public class MemberLikes extends BaseEntity {
 

@@ -29,7 +29,7 @@ import java.time.LocalDateTime;
 @Entity  // JPA 엔티티 선언. DB의 mission 테이블과 매핑된다.
 @Table(name = "mission")  // 테이블 이름을 "mission"으로 명시.
 @NoArgsConstructor(access = AccessLevel.PROTECTED)  // JPA용 기본 생성자. PROTECTED로 외부 직접 생성 차단.
-@AllArgsConstructor  // Builder가 내부적으로 사용하는 전체 필드 생성자.
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder  // 빌더 패턴 자동 생성. Mission.builder().title("미션1").reward(500L).build() 형태로 사용.
 public class Mission extends BaseEntity {
 

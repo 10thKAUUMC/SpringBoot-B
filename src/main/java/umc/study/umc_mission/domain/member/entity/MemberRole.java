@@ -32,7 +32,7 @@ import umc.study.umc_mission.global.common.BaseEntity;
  * - 외부에서 new MemberRole()을 호출하지 못하게 막아, Builder를 통한 생성을 유도한다.
  */
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor  // Builder가 내부적으로 사용하는 전체 필드 생성자.
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder  // 빌더 패턴 자동 생성.
 public class MemberRole extends BaseEntity {
 
