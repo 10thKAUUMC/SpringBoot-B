@@ -6,9 +6,12 @@ import umc.study.umc_mission.domain.member.entity.Member;
 import umc.study.umc_mission.domain.store.entity.Store;
 import umc.study.umc_mission.global.common.BaseEntity;
 
+/**
+ * 리뷰(Review) 엔티티.
+ * 회원이 가게에 작성한 리뷰를 저장한다.
+ */
 @Entity
 @Table(name = "review")
-@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
@@ -31,4 +34,24 @@ public class Review extends BaseEntity {
 
     @Column(columnDefinition = "TEXT")
     private String content;
+
+    public Long getId() {
+        return id;
+    }
+
+    public Member getMember() {
+        return member;
+    }
+
+    public Store getStore() {
+        return store;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public String getContent() {
+        return content;
+    }
 }

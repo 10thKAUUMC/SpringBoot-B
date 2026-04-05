@@ -6,9 +6,12 @@ import umc.study.umc_mission.domain.alarm.enums.AlarmType;
 import umc.study.umc_mission.domain.member.entity.Member;
 import umc.study.umc_mission.global.common.BaseEntity;
 
+/**
+ * 알림(Alarm) 엔티티.
+ * 회원에게 전송되는 알림 정보를 저장한다.
+ */
 @Entity
 @Table(name = "alarm")
-@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
@@ -35,4 +38,28 @@ public class Alarm extends BaseEntity {
 
     @Column(columnDefinition = "TEXT")
     private String content;
+
+    public Long getId() {
+        return id;
+    }
+
+    public Member getMember() {
+        return member;
+    }
+
+    public Boolean getIsConfirmed() {
+        return isConfirmed;
+    }
+
+    public AlarmType getType() {
+        return type;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getContent() {
+        return content;
+    }
 }

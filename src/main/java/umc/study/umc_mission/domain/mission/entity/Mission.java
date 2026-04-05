@@ -8,9 +8,12 @@ import umc.study.umc_mission.global.common.BaseEntity;
 
 import java.time.LocalDateTime;
 
+/**
+ * 미션(Mission) 엔티티.
+ * 가게에서 진행하는 미션 정보를 저장한다.
+ */
 @Entity
 @Table(name = "mission")
-@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
@@ -38,4 +41,32 @@ public class Mission extends BaseEntity {
     private Long reward;
 
     private LocalDateTime expiredAt;
+
+    public Long getId() {
+        return id;
+    }
+
+    public Store getStore() {
+        return store;
+    }
+
+    public MissionType getType() {
+        return type;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public Long getReward() {
+        return reward;
+    }
+
+    public LocalDateTime getExpiredAt() {
+        return expiredAt;
+    }
 }

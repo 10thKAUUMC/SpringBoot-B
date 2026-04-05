@@ -6,9 +6,12 @@ import umc.study.umc_mission.domain.member.entity.Member;
 import umc.study.umc_mission.domain.mission.enums.MissionState;
 import umc.study.umc_mission.global.common.BaseEntity;
 
+/**
+ * 회원-미션 중간 테이블.
+ * 회원이 미션에 참여한 기록과 진행 상태(state)를 저장한다.
+ */
 @Entity
 @Table(name = "member_mission")
-@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
@@ -30,4 +33,20 @@ public class MemberMission extends BaseEntity {
     @Column(nullable = false, length = 10)
     @Builder.Default
     private MissionState state = MissionState.CHALLENGING;
+
+    public Long getId() {
+        return id;
+    }
+
+    public Member getMember() {
+        return member;
+    }
+
+    public Mission getMission() {
+        return mission;
+    }
+
+    public MissionState getState() {
+        return state;
+    }
 }

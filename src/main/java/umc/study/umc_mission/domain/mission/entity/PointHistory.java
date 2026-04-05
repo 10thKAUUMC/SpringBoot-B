@@ -9,10 +9,14 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
+/**
+ * 포인트 이력(PointHistory) 엔티티.
+ * 포인트 적립/사용 기록을 저장한다.
+ * BaseEntity를 상속하지 않음 — updatedAt이 필요 없는 INSERT-only 데이터.
+ */
 @Entity
 @Table(name = "point_history")
 @EntityListeners(AuditingEntityListener.class)
-@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
@@ -43,4 +47,32 @@ public class PointHistory {
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createdAt;
+
+    public Long getId() {
+        return id;
+    }
+
+    public Member getMember() {
+        return member;
+    }
+
+    public Mission getMission() {
+        return mission;
+    }
+
+    public PointType getType() {
+        return type;
+    }
+
+    public Long getAmount() {
+        return amount;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
 }

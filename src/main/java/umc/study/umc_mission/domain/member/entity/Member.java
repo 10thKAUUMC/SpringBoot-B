@@ -7,11 +7,15 @@ import umc.study.umc_mission.global.common.BaseEntity;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+/**
+ * 회원(Member) 엔티티.
+ * DB의 member 테이블과 1:1 매핑된다.
+ */
 @Entity
 @Table(name = "member")
-@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
@@ -57,4 +61,57 @@ public class Member extends BaseEntity {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<MemberLikes> memberLikes = new ArrayList<>();
+
+    // === Getter 메서드 (필요한 필드만 외부에 노출) ===
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public LocalDate getBirth() {
+        return birth;
+    }
+
+    public String getPhoneNum() {
+        return phoneNum;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public Long getPoint() {
+        return point;
+    }
+
+    public Integer getMissionClear() {
+        return missionClear;
+    }
+
+    /**
+     * 외부에서 리스트를 직접 수정하지 못하도록 읽기 전용 복사본을 반환한다.
+     */
+    public List<MemberRole> getMemberRoles() {
+        return Collections.unmodifiableList(memberRoles);
+    }
+
+    public List<MemberLikes> getMemberLikes() {
+        return Collections.unmodifiableList(memberLikes);
+    }
 }
