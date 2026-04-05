@@ -19,7 +19,7 @@ import java.time.LocalTime;
  * <p>설계 포인트:</p>
  * <ul>
  *   <li>Region과 N:1 관계 — 하나의 지역에 여러 가게가 있을 수 있다.</li>
- *   <li>isOpened의 기본값을 false로 설정 — 가게를 등록한 직후에는 아직 영업 시작 전으로 간주.</li>
+ *   <li>opened의 기본값을 false로 설정 — 가게를 등록한 직후에는 아직 영업 시작 전으로 간주.</li>
  *   <li>openTime, closeTime에 LocalTime 사용 — 날짜 없이 시간만 필요하므로 (예: 09:00, 22:00).</li>
  * </ul>
  */
@@ -77,13 +77,13 @@ public class Store extends BaseEntity {
     /*
      * 현재 영업 중인지 여부.
      *
-     * @Builder.Default — Builder로 생성할 때 isOpened를 지정하지 않으면 기본값 false(영업 종료)가 들어간다.
+     * @Builder.Default — Builder로 생성할 때 opened를 지정하지 않으면 기본값 false(영업 종료)가 들어간다.
      *   가게를 처음 등록할 때는 아직 영업을 시작하지 않은 상태로 간주하는 것이 안전하다.
      * @Column(nullable = false) — 영업 여부는 반드시 값이 있어야 한다 (null 불가).
      */
     @Builder.Default
     @Column(nullable = false)
-    private Boolean isOpened = false;
+    private Boolean opened = false;
 
     /*
      * 영업 시작 시간. 예: 09:00.
@@ -124,8 +124,8 @@ public class Store extends BaseEntity {
     }
 
     /** 현재 영업 중인지 여부를 반환한다. true면 영업 중, false면 영업 종료. */
-    public Boolean getIsOpened() {
-        return isOpened;
+    public Boolean isOpened() {
+        return opened;
     }
 
     /** 영업 시작 시간을 반환한다. null이면 미등록. */

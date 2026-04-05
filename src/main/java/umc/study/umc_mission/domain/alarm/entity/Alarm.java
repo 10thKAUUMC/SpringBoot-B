@@ -13,12 +13,12 @@ import umc.study.umc_mission.global.common.BaseEntity;
  * 예: "미션 완료!", "새 리뷰가 달렸습니다", "포인트가 적립되었습니다" 등.</p>
  *
  * <p>알림의 유형(type)에 따라 다른 종류의 알림을 구분하고,
- * isConfirmed로 회원이 이 알림을 확인했는지 추적한다.</p>
+ * confirmed로 회원이 이 알림을 확인했는지 추적한다.</p>
  *
  * <p>설계 포인트:</p>
  * <ul>
  *   <li>Member와 N:1 관계 — 한 회원이 여러 알림을 받을 수 있다.</li>
- *   <li>isConfirmed 기본값 false — 알림은 생성 시점에는 아직 확인되지 않은 상태.</li>
+ *   <li>confirmed 기본값 false — 알림은 생성 시점에는 아직 확인되지 않은 상태.</li>
  *   <li>content에 TEXT 타입 — 알림 내용이 길어질 수 있으므로.</li>
  * </ul>
  */
@@ -54,14 +54,14 @@ public class Alarm extends BaseEntity {
     /*
      * 회원이 이 알림을 확인했는지 여부.
      *
-     * @Builder.Default — Builder로 생성할 때 isConfirmed를 지정하지 않으면 기본값 false가 들어간다.
+     * @Builder.Default — Builder로 생성할 때 confirmed를 지정하지 않으면 기본값 false가 들어간다.
      *   알림은 생성 시점에 아직 확인되지 않은 상태이므로 false가 합리적이다.
      *   회원이 알림을 클릭/읽으면 이 값이 true로 변경된다.
      * @Column(nullable = false) — 확인 여부는 반드시 값이 있어야 한다 (null 불가).
      */
     @Builder.Default
     @Column(nullable = false)
-    private Boolean isConfirmed = false;
+    private Boolean confirmed = false;
 
     /*
      * 알림의 유형 (예: MISSION_COMPLETE, REVIEW_CREATED, POINT_EARNED 등).
@@ -103,8 +103,8 @@ public class Alarm extends BaseEntity {
     }
 
     /** 회원이 이 알림을 확인했는지 여부를 반환한다. true면 확인됨, false면 미확인. */
-    public Boolean getIsConfirmed() {
-        return isConfirmed;
+    public Boolean isConfirmed() {
+        return confirmed;
     }
 
     /** 알림의 유형(MISSION_COMPLETE, REVIEW_CREATED 등)을 반환한다. */
