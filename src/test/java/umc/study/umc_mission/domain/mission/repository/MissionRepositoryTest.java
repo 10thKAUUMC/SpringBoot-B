@@ -3,11 +3,13 @@ package umc.study.umc_mission.domain.mission.repository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
 import umc.study.umc_mission.domain.mission.entity.Mission;
 import umc.study.umc_mission.domain.mission.enums.MissionType;
+import umc.study.umc_mission.domain.mission.repository.MissionJpaRepository;
 import umc.study.umc_mission.domain.region.entity.Region;
 import umc.study.umc_mission.domain.store.entity.Store;
 
@@ -16,11 +18,12 @@ import java.time.LocalDateTime;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ActiveProfiles("test")
 class MissionRepositoryTest {
 
     @Autowired
-    private MissionRepository missionRepository;
+    private MissionJpaRepository missionRepository;
 
     @Autowired
     private TestEntityManager em;
