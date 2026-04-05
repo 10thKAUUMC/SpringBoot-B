@@ -5,21 +5,22 @@ import lombok.*;
 import umc.study.umc_mission.global.common.BaseEntity;
 
 /**
- * 지역(Region) 엔티티.
- * "서울", "부산" 등 지역 정보를 저장한다.
+ * 음식 카테고리(FoodCategory) 엔티티.
+ * 가게가 취급하는 음식 분류("한식", "일식", "중식" 등)를 저장한다.
+ * 회원의 음식 취향(MemberLikes)과 연결된다.
  */
 @Entity
-@Table(name = "region")
+@Table(name = "food_category")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-public class Region extends BaseEntity {
+public class FoodCategory extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 30)
+    @Column(nullable = false, length = 15)
     private String name;
 
     public Long getId() {

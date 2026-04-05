@@ -2,6 +2,7 @@ package umc.study.umc_mission.domain.store.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import umc.study.umc_mission.domain.region.entity.Region;
 import umc.study.umc_mission.global.common.BaseEntity;
 
 import java.time.LocalTime;

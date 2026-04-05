@@ -1,25 +1,25 @@
-package umc.study.umc_mission.domain.member.entity;
+package umc.study.umc_mission.domain.region.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import umc.study.umc_mission.global.common.BaseEntity;
 
 /**
- * 역할(Role) 엔티티.
- * USER, ADMIN 등의 역할 정보를 저장한다.
- * BaseEntity를 상속하지 않음 — createdAt/updatedAt이 필요 없는 마스터 데이터.
+ * 지역(Region) 엔티티.
+ * "서울", "부산" 등 지역 정보를 저장한다.
  */
 @Entity
-@Table(name = "role")
+@Table(name = "region")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-public class Role {
+public class Region extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 10)
+    @Column(nullable = false, length = 30)
     private String name;
 
     public Long getId() {

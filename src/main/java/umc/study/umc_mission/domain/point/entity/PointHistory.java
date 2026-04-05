@@ -1,9 +1,10 @@
-package umc.study.umc_mission.domain.mission.entity;
+package umc.study.umc_mission.domain.point.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 import umc.study.umc_mission.domain.member.entity.Member;
-import umc.study.umc_mission.domain.mission.enums.PointType;
+import umc.study.umc_mission.domain.mission.entity.Mission;
+import umc.study.umc_mission.domain.point.enums.PointType;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 

@@ -8,7 +8,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
 import umc.study.umc_mission.domain.member.entity.Member;
 import umc.study.umc_mission.domain.review.entity.Review;
-import umc.study.umc_mission.domain.store.entity.Region;
+import umc.study.umc_mission.domain.region.entity.Region;
 import umc.study.umc_mission.domain.store.entity.Store;
 
 import static org.assertj.core.api.Assertions.assertThat;
