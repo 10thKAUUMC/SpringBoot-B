@@ -1,4 +1,4 @@
-package umc.study.umc_mission.domain.point.repository;
+package umc.study.umc_mission.infrastructure.point.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import umc.study.umc_mission.domain.point.entity.PointHistory;

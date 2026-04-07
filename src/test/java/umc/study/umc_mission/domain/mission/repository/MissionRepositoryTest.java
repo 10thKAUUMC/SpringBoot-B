@@ -8,7 +8,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
 import umc.study.umc_mission.domain.mission.entity.Mission;
 import umc.study.umc_mission.domain.mission.enums.MissionType;
-import umc.study.umc_mission.domain.mission.repository.MissionJpaRepository;
+import umc.study.umc_mission.infrastructure.mission.repository.MissionJpaRepository;
 import umc.study.umc_mission.domain.region.entity.Region;
 import umc.study.umc_mission.domain.store.entity.Store;
 

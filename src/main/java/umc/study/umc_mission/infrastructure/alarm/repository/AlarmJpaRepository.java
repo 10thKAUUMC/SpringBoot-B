@@ -1,4 +1,4 @@
-package umc.study.umc_mission.domain.alarm.repository;
+package umc.study.umc_mission.infrastructure.alarm.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import umc.study.umc_mission.domain.alarm.entity.Alarm;

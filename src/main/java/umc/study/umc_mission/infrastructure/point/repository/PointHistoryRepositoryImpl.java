@@ -1,8 +1,7 @@
-package umc.study.umc_mission.domain.point.repository.impl;
+package umc.study.umc_mission.infrastructure.point.repository;
 
 import org.springframework.stereotype.Repository;
 import umc.study.umc_mission.domain.point.entity.PointHistory;
-import umc.study.umc_mission.domain.point.repository.PointHistoryJpaRepository;
 import umc.study.umc_mission.domain.point.repository.PointHistoryRepository;
 
 import java.util.List;

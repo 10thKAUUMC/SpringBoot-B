@@ -1,8 +1,7 @@
-package umc.study.umc_mission.domain.review.repository.impl;
+package umc.study.umc_mission.infrastructure.review.repository;
 
 import org.springframework.stereotype.Repository;
 import umc.study.umc_mission.domain.review.entity.Review;
-import umc.study.umc_mission.domain.review.repository.ReviewJpaRepository;
 import umc.study.umc_mission.domain.review.repository.ReviewRepository;
 
 import java.util.List;

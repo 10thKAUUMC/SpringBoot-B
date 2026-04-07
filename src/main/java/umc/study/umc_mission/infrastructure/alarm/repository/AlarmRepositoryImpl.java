@@ -1,8 +1,7 @@
-package umc.study.umc_mission.domain.alarm.repository.impl;
+package umc.study.umc_mission.infrastructure.alarm.repository;
 
 import org.springframework.stereotype.Repository;
 import umc.study.umc_mission.domain.alarm.entity.Alarm;
-import umc.study.umc_mission.domain.alarm.repository.AlarmJpaRepository;
 import umc.study.umc_mission.domain.alarm.repository.AlarmRepository;
 
 import java.util.List;

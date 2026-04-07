@@ -7,6 +7,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 import umc.study.umc_mission.domain.member.entity.Member;
 import umc.study.umc_mission.domain.member.enums.Gender;
+import umc.study.umc_mission.infrastructure.member.repository.MemberJpaRepository;
 
 import java.time.LocalDate;
 

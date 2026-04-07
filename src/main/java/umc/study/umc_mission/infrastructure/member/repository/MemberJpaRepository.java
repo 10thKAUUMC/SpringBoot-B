@@ -1,4 +1,4 @@
-package umc.study.umc_mission.domain.member.repository;
+package umc.study.umc_mission.infrastructure.member.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import umc.study.umc_mission.domain.member.entity.Member;

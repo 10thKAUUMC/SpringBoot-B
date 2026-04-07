@@ -1,8 +1,7 @@
-package umc.study.umc_mission.domain.region.repository.impl;
+package umc.study.umc_mission.infrastructure.region.repository;
 
 import org.springframework.stereotype.Repository;
 import umc.study.umc_mission.domain.region.entity.Region;
-import umc.study.umc_mission.domain.region.repository.RegionJpaRepository;
 import umc.study.umc_mission.domain.region.repository.RegionRepository;
 
 import java.util.List;

@@ -1,8 +1,7 @@
-package umc.study.umc_mission.domain.member.repository.impl;
+package umc.study.umc_mission.infrastructure.member.repository;
 
 import org.springframework.stereotype.Repository;
 import umc.study.umc_mission.domain.member.entity.Member;
-import umc.study.umc_mission.domain.member.repository.MemberJpaRepository;
 import umc.study.umc_mission.domain.member.repository.MemberRepository;
 
 import java.util.List;
