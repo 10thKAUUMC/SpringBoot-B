@@ -1,17 +1,18 @@
-package com.example.umc10th.domain.review.exception.code;
+package com.example.umc10th.global.apiPayload.code.status;
 
-import com.example.umc10th.global.apiPayload.code.BaseErrorCode;
+import com.example.umc10th.global.apiPayload.code.BaseSuccessCode;
 import org.springframework.http.HttpStatus;
 
-public enum ReviewErrorCode implements BaseErrorCode {
+public enum GeneralSuccessCode implements BaseSuccessCode {
 
-    REVIEW_NOT_FOUND(HttpStatus.NOT_FOUND, "REVIEW404", "리뷰를 찾을 수 없습니다.");
+    OK(HttpStatus.OK, "COMMON200", "요청에 성공했습니다."),
+    CREATED(HttpStatus.CREATED, "COMMON201", "리소스가 생성되었습니다.");
 
     private final HttpStatus status;
     private final String code;
     private final String message;
 
-    ReviewErrorCode(HttpStatus status, String code, String message) {
+    GeneralSuccessCode(HttpStatus status, String code, String message) {
         this.status = status;
         this.code = code;
         this.message = message;
