@@ -1,3 +1,24 @@
+# UMC 10기 6주차 미션: API 설계 기초 — JPA (연관관계 + JPQL + 페이징)
+
+> 5주차의 응답 통일 / 전역 에러 핸들러 / 첫 API(마이페이지) 위에,
+> **JPA 양방향 연관관계 매핑 + JPQL + Pageable 기반 페이징**을 적용한
+> 도메인 API 3개(리뷰 작성 · 내 미션 목록 · 지역 도전 가능 미션)를 추가합니다.
+
+## 6주차 추가 분량 요약
+
+| 영역 | 내용 |
+|------|------|
+| 양방향 연관관계 | `Member`(reviews/memberMissions), `Store`(missions/reviews), `Region`(stores) 부모측 `@OneToMany` 추가 |
+| JPQL + 페이징 | `@Query` + `countQuery` + `Pageable`, `fetch join`으로 N+1 회피 |
+| Review API | `POST /api/v1/stores/{storeId}/reviews` |
+| Mission API | `GET /api/v1/users/{memberId}/missions?state=&page=&size=` (내 미션, 페이징) |
+| Mission API | `GET /api/v1/regions/{regionId}/missions?page=&size=` (지역 도전 가능, 페이징) |
+| 응답 페이징 메타 | DTO에 `currentPage/totalPages/totalElements/isLast` 평면화 |
+
+> 자세한 6주차 키워드/설계 메모는 저장소 외부의 [6week.md](../6week.md)를 참고. 5주차 분량(응답 통일 / 에러 핸들러 / 마이페이지 API)은 그대로 유지되며, 아래 5주차 섹션이 그것을 설명합니다.
+
+---
+
 # UMC 10기 5주차 미션: API 응답 통일 + 에러 핸들러 + 마이페이지 API
 
 > 4주차에서 잡아둔 도메인형 아키텍처 위에, **응답 통일 객체 / 전역 에러 핸들러 / 도메인별 ErrorCode·Exception 분리**를 도입하고
