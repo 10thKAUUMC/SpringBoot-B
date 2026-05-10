@@ -1,5 +1,7 @@
 package umc.study.umc_mission.domain.mission.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import umc.study.umc_mission.domain.mission.entity.Mission;
 
 import java.util.List;
@@ -58,4 +60,16 @@ public interface MissionRepository {
      * @param mission 삭제할 미션 엔티티
      */
     void delete(Mission mission);
+
+    /**
+     * 6주차 추가 — 특정 지역에 속한 가게들의 "도전 가능한" 미션을 페이징해서 조회한다.
+     *
+     * <p>도전 가능 = 만료되지 않은 미션. 만료가 NULL이면 영구 미션으로 간주.
+     * Mission ↔ Store ↔ Region 그래프를 JPQL fetch join 또는 join 조건으로 풀어낸다.</p>
+     *
+     * @param regionId 대상 지역의 PK
+     * @param pageable Spring Data Pageable (page/size/sort)
+     * @return 해당 지역의 도전 가능 미션 페이지
+     */
+    Page<Mission> findChallengableByRegion(Long regionId, Pageable pageable);
 }
