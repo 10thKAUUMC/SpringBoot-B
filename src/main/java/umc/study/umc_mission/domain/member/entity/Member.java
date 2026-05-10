@@ -3,6 +3,8 @@ package umc.study.umc_mission.domain.member.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import umc.study.umc_mission.domain.member.enums.Gender;
+import umc.study.umc_mission.domain.mission.entity.MemberMission;
+import umc.study.umc_mission.domain.review.entity.Review;
 import umc.study.umc_mission.global.common.BaseEntity;
 
 import java.time.LocalDate;
@@ -168,6 +170,25 @@ public class Member extends BaseEntity {
     @Builder.Default
     private List<MemberLikes> memberLikes = new ArrayList<>();
 
+    /*
+     * 6주차 추가 — 회원이 작성한 리뷰 목록 (1:N).
+     * mappedBy = "member": Review 엔티티의 member 필드가 FK 주인.
+     * 양방향 매핑을 두는 이유: 도메인 객체 그래프 탐색(member.getReviews())이 자연스럽고,
+     * 테스트/대량 삭제(cascade)에서 부모 기준으로 다룰 수 있기 때문.
+     * cascade는 회원 삭제 시 리뷰까지 일괄 정리되도록 ALL + orphanRemoval.
+     */
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<Review> reviews = new ArrayList<>();
+
+    /*
+     * 6주차 추가 — 회원의 미션 참여 기록(진행중/완료) 목록 (1:N).
+     * 마이페이지·내 미션 화면에서 member 기준으로 조회/페이징하는 데 사용된다.
+     */
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<MemberMission> memberMissions = new ArrayList<>();
+
     // === Getter 메서드 (필요한 필드만 외부에 노출) ===
     // Lombok의 @Getter를 사용하지 않고 직접 작성한 이유:
     // 컬렉션 필드(memberRoles, memberLikes)는 Collections.unmodifiableList로 감싸서 반환해야 하므로,
@@ -243,5 +264,15 @@ public class Member extends BaseEntity {
      */
     public List<MemberLikes> getMemberLikes() {
         return Collections.unmodifiableList(memberLikes);
+    }
+
+    /** 회원이 작성한 리뷰 목록을 읽기 전용으로 반환한다. */
+    public List<Review> getReviews() {
+        return Collections.unmodifiableList(reviews);
+    }
+
+    /** 회원의 미션 참여 기록 목록을 읽기 전용으로 반환한다. */
+    public List<MemberMission> getMemberMissions() {
+        return Collections.unmodifiableList(memberMissions);
     }
 }

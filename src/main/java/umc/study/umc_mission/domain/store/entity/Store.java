@@ -2,10 +2,15 @@ package umc.study.umc_mission.domain.store.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import umc.study.umc_mission.domain.mission.entity.Mission;
 import umc.study.umc_mission.domain.region.entity.Region;
+import umc.study.umc_mission.domain.review.entity.Review;
 import umc.study.umc_mission.global.common.BaseEntity;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * 가게(Store) 엔티티 — 음식점이나 상점의 정보를 표현한다.
@@ -98,6 +103,23 @@ public class Store extends BaseEntity {
      */
     private LocalTime closeTime;
 
+    /*
+     * 6주차 추가 — 이 가게에 등록된 미션 목록 (1:N).
+     * mappedBy = "store": Mission 엔티티의 store 필드가 FK 주인.
+     * 가게 상세 화면에서 store.getMissions()로 즉시 조회 가능 (LAZY).
+     */
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<Mission> missions = new ArrayList<>();
+
+    /*
+     * 6주차 추가 — 이 가게에 달린 리뷰 목록 (1:N).
+     * 가게 상세 화면 / 평점 집계에서 사용한다.
+     */
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<Review> reviews = new ArrayList<>();
+
     /** 기본 키(PK)를 반환한다. */
     public Long getId() {
         return id;
@@ -136,5 +158,15 @@ public class Store extends BaseEntity {
     /** 영업 종료 시간을 반환한다. null이면 미등록. */
     public LocalTime getCloseTime() {
         return closeTime;
+    }
+
+    /** 가게의 미션 목록을 읽기 전용으로 반환한다. */
+    public List<Mission> getMissions() {
+        return Collections.unmodifiableList(missions);
+    }
+
+    /** 가게에 달린 리뷰 목록을 읽기 전용으로 반환한다. */
+    public List<Review> getReviews() {
+        return Collections.unmodifiableList(reviews);
     }
 }
