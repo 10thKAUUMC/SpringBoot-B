@@ -2,12 +2,16 @@ package umc.study.umc_mission.global.apiPayload.exception.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import umc.study.umc_mission.global.apiPayload.ApiResponse;
 import umc.study.umc_mission.global.apiPayload.code.BaseErrorCode;
 import umc.study.umc_mission.global.apiPayload.code.status.GeneralErrorCode;
 import umc.study.umc_mission.global.apiPayload.exception.GeneralException;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 전역 예외 처리 어드바이스.
@@ -41,6 +45,32 @@ public class GeneralExceptionAdvice {
         return ResponseEntity
                 .status(errorCode.getStatus())
                 .body(ApiResponse.onFailure(errorCode, null));
+    }
+
+    /**
+     * 7주차 추가 — {@code @Valid}가 붙은 요청 DTO의 Bean Validation이 실패할 때 던져지는 예외.
+     *
+     * <p>기존 동작: 핸들러가 없어 {@link #handleException(Exception)}으로 떨어지면서
+     * HTTP 500 + {@code COMMON5000}("서버 내부 오류")로 응답됐다. 검증 실패는 클라이언트
+     * 입력 문제(4xx)이므로 의미적으로 잘못된 응답이었다.</p>
+     *
+     * <p>새 동작: 400 + {@code COMMON4000}으로 응답하고, {@code result}에
+     * <code>{ "필드명": "DTO에 선언한 message" }</code> 형태의 Map을 담아
+     * 프론트가 필드별로 분기·하이라이트할 수 있게 한다.</p>
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ApiResponse<Map<String, String>>> handleMethodArgumentNotValid(
+            MethodArgumentNotValidException e) {
+
+        Map<String, String> errors = new HashMap<>();
+        e.getBindingResult().getFieldErrors().forEach(fieldError ->
+                errors.put(fieldError.getField(), fieldError.getDefaultMessage()));
+
+        log.warn("[ValidationFailed] {}", errors);
+        BaseErrorCode code = GeneralErrorCode.BAD_REQUEST;
+        return ResponseEntity
+                .status(code.getStatus())
+                .body(ApiResponse.onFailure(code, errors));
     }
 
     /**
