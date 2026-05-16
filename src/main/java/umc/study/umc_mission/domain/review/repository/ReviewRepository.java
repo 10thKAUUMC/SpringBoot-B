@@ -1,5 +1,7 @@
 package umc.study.umc_mission.domain.review.repository;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import umc.study.umc_mission.domain.review.entity.Review;
 
 import java.util.List;
@@ -54,4 +56,29 @@ public interface ReviewRepository {
      * @param review 삭제할 리뷰 엔티티
      */
     void delete(Review review);
+
+    /**
+     * 7주차 추가 — 내 리뷰를 ID 기준 커서 페이지네이션으로 조회한다.
+     *
+     * <p>커서 의미: 이 ID보다 작은 리뷰만(ID DESC). null이면 처음부터.</p>
+     *
+     * @param memberId 작성자 회원 PK
+     * @param cursorId 이전 페이지 마지막 행의 reviewId (없으면 null)
+     * @param pageable size만 사용 (Slice가 size+1 트릭 적용)
+     */
+    Slice<Review> findMyReviewsByIdCursor(Long memberId, Long cursorId, Pageable pageable);
+
+    /**
+     * 7주차 추가 — 내 리뷰를 별점 기준 커서 페이지네이션으로 조회한다.
+     *
+     * <p>별점은 중복이 흔하므로 (rating, id) 복합 커서를 사용한다.
+     * "rating DESC, id DESC" 정렬 하에서 (cursorRating, cursorId)보다 뒤에 오는 행을 가져온다.</p>
+     *
+     * @param memberId     작성자 회원 PK
+     * @param cursorRating 이전 페이지 마지막 행의 rating (없으면 null)
+     * @param cursorId     이전 페이지 마지막 행의 reviewId (없으면 null)
+     * @param pageable     size만 사용
+     */
+    Slice<Review> findMyReviewsByStarCursor(
+            Long memberId, String cursorRating, Long cursorId, Pageable pageable);
 }
