@@ -8,4 +8,8 @@ import umc.study.umc_mission.domain.member.entity.Member;
  * MemberRepositoryImpl 내부에서만 사용된다.
  */
 public interface MemberJpaRepository extends JpaRepository<Member, Long> {
+
+    java.util.Optional<Member> findByEmail(String email);
+
+    boolean existsByEmail(String email);
 }

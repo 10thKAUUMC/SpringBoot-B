@@ -58,4 +58,18 @@ public interface MemberRepository {
      * @param member 삭제할 회원 엔티티
      */
     void delete(Member member);
+
+    /**
+     * 8주차 추가 — 이메일로 회원을 조회한다.
+     *
+     * <p>{@code CustomUserDetailsService.loadUserByUsername}에서 사용. 폼 로그인의 username 필드를
+     * 이메일로 받기 때문에 이메일을 키로 회원을 식별한다.</p>
+     */
+    Optional<Member> findByEmail(String email);
+
+    /**
+     * 8주차 추가 — 이메일 중복 여부 확인.
+     * 회원가입 API에서 중복 이메일이면 {@code DUPLICATE_EMAIL}로 실패시키기 위해 사용.
+     */
+    boolean existsByEmail(String email);
 }
