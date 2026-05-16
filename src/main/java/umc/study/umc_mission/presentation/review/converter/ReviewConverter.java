@@ -1,10 +1,14 @@
 package umc.study.umc_mission.presentation.review.converter;
 
+import org.springframework.data.domain.Slice;
 import umc.study.umc_mission.domain.member.entity.Member;
 import umc.study.umc_mission.domain.review.entity.Review;
 import umc.study.umc_mission.domain.store.entity.Store;
 import umc.study.umc_mission.presentation.review.dto.ReviewRequestDTO;
 import umc.study.umc_mission.presentation.review.dto.ReviewResponseDTO;
+import umc.study.umc_mission.presentation.review.dto.ReviewResponseDTO.MyReviewSliceSort;
+
+import java.util.List;
 
 /**
  * Review 엔티티 ↔ Review DTO 변환기.
@@ -40,6 +44,55 @@ public final class ReviewConverter {
                 .memberId(review.getMember().getId())
                 .storeId(review.getStore().getId())
                 .createdAt(review.getCreatedAt())
+                .build();
+    }
+
+    /** 7주차 — 내 리뷰 한 행 변환. */
+    public static ReviewResponseDTO.MyReviewItem toMyReviewItem(Review r) {
+        return ReviewResponseDTO.MyReviewItem.builder()
+                .reviewId(r.getId())
+                .storeId(r.getStore().getId())
+                .storeName(r.getStore().getName())
+                .rating(r.getRating())
+                .content(r.getContent())
+                .createdAt(r.getCreatedAt())
+                .build();
+    }
+
+    /**
+     * 7주차 — Slice<Review>를 커서 응답 DTO로 변환한다.
+     *
+     * <p>다음 커서 계산:</p>
+     * <ul>
+     *   <li>hasNext == false → null</li>
+     *   <li>ID 정렬 → {@code "ID:<lastId>"}</li>
+     *   <li>STAR 정렬 → {@code "STAR:<lastRating>:<lastId>"} (별점 동률 대비 복합 커서)</li>
+     * </ul>
+     *
+     * <p>커서 생성 책임을 컨버터에 두는 이유: 커서 포맷은 응답 스키마의 일부이고,
+     * 응답 모양이 바뀌면 컨버터만 수정하면 되도록 위치를 한 곳에 모은다.</p>
+     */
+    public static ReviewResponseDTO.MyReviewSlice toMyReviewSlice(
+            Slice<Review> slice, MyReviewSliceSort sort) {
+
+        List<ReviewResponseDTO.MyReviewItem> items = slice.getContent().stream()
+                .map(ReviewConverter::toMyReviewItem)
+                .toList();
+
+        String nextCursor = null;
+        if (slice.hasNext() && !items.isEmpty()) {
+            ReviewResponseDTO.MyReviewItem last = items.get(items.size() - 1);
+            nextCursor = switch (sort) {
+                case ID -> "ID:" + last.reviewId();
+                case STAR -> "STAR:" + last.rating() + ":" + last.reviewId();
+            };
+        }
+
+        return ReviewResponseDTO.MyReviewSlice.builder()
+                .reviews(items)
+                .size(items.size())
+                .hasNext(slice.hasNext())
+                .nextCursor(nextCursor)
                 .build();
     }
 }

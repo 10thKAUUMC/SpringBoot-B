@@ -1,5 +1,7 @@
 package umc.study.umc_mission.infrastructure.review.repository;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Repository;
 import umc.study.umc_mission.domain.review.entity.Review;
 import umc.study.umc_mission.domain.review.repository.ReviewRepository;
@@ -38,5 +40,16 @@ public class ReviewRepositoryImpl implements ReviewRepository {
     @Override
     public void delete(Review review) {
         jpaRepository.delete(review);
+    }
+
+    @Override
+    public Slice<Review> findMyReviewsByIdCursor(Long memberId, Long cursorId, Pageable pageable) {
+        return jpaRepository.findMyReviewsByIdCursor(memberId, cursorId, pageable);
+    }
+
+    @Override
+    public Slice<Review> findMyReviewsByStarCursor(
+            Long memberId, String cursorRating, Long cursorId, Pageable pageable) {
+        return jpaRepository.findMyReviewsByStarCursor(memberId, cursorRating, cursorId, pageable);
     }
 }
