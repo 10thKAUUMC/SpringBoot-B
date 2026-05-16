@@ -3,12 +3,15 @@ package umc.study.umc_mission.presentation.mission.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +19,7 @@ import umc.study.umc_mission.domain.mission.enums.MissionState;
 import umc.study.umc_mission.domain.mission.exception.MissionSuccessCode;
 import umc.study.umc_mission.domain.mission.service.MissionService;
 import umc.study.umc_mission.global.apiPayload.ApiResponse;
+import umc.study.umc_mission.presentation.mission.dto.MissionRequestDTO;
 import umc.study.umc_mission.presentation.mission.dto.MissionResponseDTO;
 
 /**
@@ -56,6 +60,32 @@ public class MissionController {
             @PageableDefault(size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
     ) {
         MissionResponseDTO.MyMissionPage result = missionService.getMyMissions(memberId, state, pageable);
+        return ApiResponse.onSuccess(MissionSuccessCode.GET_MY_MISSIONS, result);
+    }
+
+    /**
+     * 7주차 미션 — 내 진행중 미션 조회 (오프셋 페이지네이션, Body로 memberId 수신).
+     *
+     * <p>워크북 지시사항을 따른다: <b>사용자 ID는 Request Body에서 받기, 하드코딩 X</b>.
+     * 6주차의 {@code GET /api/v1/users/{memberId}/missions}는 PathVariable로 회원 ID를 받고
+     * state 쿼리 파라미터로 필터링하는 일반 조회 엔드포인트로 그대로 유지하고, 이번 엔드포인트는
+     * "진행 중 미션 화면" 전용으로 분리한다.</p>
+     *
+     * <p>요청 예시:</p>
+     * <pre>{@code
+     * POST /api/v1/users/me/missions/in-progress?page=0&size=10
+     * { "memberId": 1 }
+     * }</pre>
+     */
+    @PostMapping("/api/v1/users/me/missions/in-progress")
+    @Operation(summary = "내 진행중 미션 조회 (오프셋)",
+            description = "워크북 7주차 미션 — Body로 회원 ID를 받고, CHALLENGING 상태 미션을 오프셋 페이징해 반환한다.")
+    public ApiResponse<MissionResponseDTO.MyMissionPage> getMyInProgressMissions(
+            @Valid @RequestBody MissionRequestDTO.MyInProgressRequest request,
+            @PageableDefault(size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
+    ) {
+        MissionResponseDTO.MyMissionPage result =
+                missionService.getMyMissions(request.memberId(), MissionState.CHALLENGING, pageable);
         return ApiResponse.onSuccess(MissionSuccessCode.GET_MY_MISSIONS, result);
     }
 
