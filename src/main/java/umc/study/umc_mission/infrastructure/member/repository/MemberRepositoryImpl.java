@@ -39,4 +39,14 @@ public class MemberRepositoryImpl implements MemberRepository {
     public void delete(Member member) {
         jpaRepository.delete(member);
     }
+
+    @Override
+    public Optional<Member> findByEmail(String email) {
+        return jpaRepository.findByEmail(email);
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        return jpaRepository.existsByEmail(email);
+    }
 }

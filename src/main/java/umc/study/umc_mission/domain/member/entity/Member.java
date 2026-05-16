@@ -95,6 +95,16 @@ public class Member extends BaseEntity {
     private String email;
 
     /*
+     * 8주차 추가 — 폼 로그인용 비밀번호 (BCrypt 해시 저장).
+     *
+     * length = 60: BCrypt 해시 결과 길이가 60자(고정).
+     * nullable = true(기본): 4~7주차 데이터(비밀번호 없이 생성된 회원)와의 호환성을 위해 NOT NULL 강제하지 않음.
+     *   추후 모든 회원이 폼 로그인 가능해지면 NOT NULL로 마이그레이션.
+     */
+    @Column(length = 60)
+    private String password;
+
+    /*
      * 회원의 성별.
      *
      * @Enumerated(EnumType.STRING)
@@ -212,6 +222,11 @@ public class Member extends BaseEntity {
     /** 회원의 이메일을 반환한다. */
     public String getEmail() {
         return email;
+    }
+
+    /** 회원의 BCrypt 해시된 비밀번호를 반환한다. (8주차 추가) */
+    public String getPassword() {
+        return password;
     }
 
     /** 회원의 성별을 반환한다. */
