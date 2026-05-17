@@ -5,7 +5,9 @@ import org.springframework.http.HttpStatus;
 
 public enum MissionErrorCode implements BaseErrorCode {
 
-    MISSION_NOT_FOUND(HttpStatus.NOT_FOUND, "MISSION404", "미션을 찾을 수 없습니다.");
+    MISSION_NOT_FOUND(HttpStatus.NOT_FOUND, "MISSION404", "미션을 찾을 수 없습니다."),
+    MEMBER_MISSION_NOT_FOUND(HttpStatus.NOT_FOUND, "MISSION405", "회원 미션을 찾을 수 없습니다."),
+    INVALID_MISSION_STATUS(HttpStatus.BAD_REQUEST, "MISSION400", "올바르지 않은 미션 상태입니다.");
 
     private final HttpStatus status;
     private final String code;
