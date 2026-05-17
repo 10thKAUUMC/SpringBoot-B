@@ -17,6 +17,23 @@ public class MissionResDTO {
     ) {
     }
 
+    @Schema(description = "오프셋 기반 진행중 미션 목록 응답")
+    public record InProgressMissionPageResponse(
+            @Schema(description = "진행중인 미션 목록")
+            List<MissionSummaryResponse> missions,
+            @Schema(description = "현재 페이지 번호", example = "0")
+            Integer page,
+            @Schema(description = "페이지 크기", example = "10")
+            Integer size,
+            @Schema(description = "전체 진행중 미션 개수", example = "12")
+            Long totalElements,
+            @Schema(description = "전체 페이지 수", example = "2")
+            Integer totalPages,
+            @Schema(description = "다음 페이지 존재 여부", example = "true")
+            Boolean hasNext
+    ) {
+    }
+
     @Schema(description = "미션 요약 응답")
     public record MissionSummaryResponse(
             @Schema(description = "회원 미션 ID", example = "1")

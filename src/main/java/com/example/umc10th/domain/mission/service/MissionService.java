@@ -7,9 +7,13 @@ import com.example.umc10th.domain.mission.enums.MissionStatus;
 import com.example.umc10th.domain.mission.exception.MissionException;
 import com.example.umc10th.domain.mission.exception.code.MissionErrorCode;
 import com.example.umc10th.domain.mission.repository.MemberMissionRepository;
+import com.example.umc10th.domain.member.exception.MemberException;
+import com.example.umc10th.domain.member.exception.code.MemberErrorCode;
+import com.example.umc10th.domain.member.repository.MemberRepository;
 import com.example.umc10th.global.util.AuthMemberResolver;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
@@ -20,9 +24,40 @@ import org.springframework.transaction.annotation.Transactional;
 public class MissionService {
 
     private final MemberMissionRepository memberMissionRepository;
+    private final MemberRepository memberRepository;
 
-    public MissionService(MemberMissionRepository memberMissionRepository) {
+    public MissionService(MemberMissionRepository memberMissionRepository, MemberRepository memberRepository) {
         this.memberMissionRepository = memberMissionRepository;
+        this.memberRepository = memberRepository;
+    }
+
+    public MissionResDTO.InProgressMissionPageResponse getMyInProgressMissions(
+            MissionReqDTO.InProgressMissionListRequest request
+    ) {
+        if (!memberRepository.existsById(request.memberId())) {
+            throw new MemberException(MemberErrorCode.MEMBER_NOT_FOUND);
+        }
+
+        int page = request.page() == null ? 0 : request.page();
+        int size = request.size() == null ? 10 : request.size();
+        Page<MemberMission> memberMissionPage = memberMissionRepository.findByMemberIdAndStatusOrderByIdDesc(
+                request.memberId(),
+                MissionStatus.IN_PROGRESS,
+                PageRequest.of(page, size)
+        );
+
+        List<MissionResDTO.MissionSummaryResponse> missions = memberMissionPage.getContent().stream()
+                .map(this::toMissionSummaryResponse)
+                .toList();
+
+        return new MissionResDTO.InProgressMissionPageResponse(
+                missions,
+                memberMissionPage.getNumber(),
+                memberMissionPage.getSize(),
+                memberMissionPage.getTotalElements(),
+                memberMissionPage.getTotalPages(),
+                memberMissionPage.hasNext()
+        );
     }
 
     public MissionResDTO.MissionListResponse getMyMissions(
@@ -41,19 +76,7 @@ public class MissionService {
         );
 
         List<MissionResDTO.MissionSummaryResponse> missions = memberMissionSlice.getContent().stream()
-                .map(memberMission -> new MissionResDTO.MissionSummaryResponse(
-                        memberMission.getId(),
-                        memberMission.getMission().getId(),
-                        memberMission.getMission().getStore().getId(),
-                        memberMission.getMission().getStore().getName(),
-                        memberMission.getMission().getStore().getDescription(),
-                        memberMission.getMission().getContent(),
-                        memberMission.getMission().getDeadline(),
-                        memberMission.getMission().getPoint(),
-                        memberMission.getStatus().name(),
-                        toStatusLabel(memberMission.getStatus()),
-                        toActionLabel(memberMission.getStatus())
-                ))
+                .map(this::toMissionSummaryResponse)
                 .toList();
 
         return new MissionResDTO.MissionListResponse(
@@ -74,6 +97,22 @@ public class MissionService {
 
         memberMission.updateStatus(status);
         return new MissionResDTO.UpdateMissionStatusResponse(memberMission.getId(), memberMission.getStatus().name());
+    }
+
+    private MissionResDTO.MissionSummaryResponse toMissionSummaryResponse(MemberMission memberMission) {
+        return new MissionResDTO.MissionSummaryResponse(
+                memberMission.getId(),
+                memberMission.getMission().getId(),
+                memberMission.getMission().getStore().getId(),
+                memberMission.getMission().getStore().getName(),
+                memberMission.getMission().getStore().getDescription(),
+                memberMission.getMission().getContent(),
+                memberMission.getMission().getDeadline(),
+                memberMission.getMission().getPoint(),
+                memberMission.getStatus().name(),
+                toStatusLabel(memberMission.getStatus()),
+                toActionLabel(memberMission.getStatus())
+        );
     }
 
     private MissionStatus parseMissionStatus(String status) {

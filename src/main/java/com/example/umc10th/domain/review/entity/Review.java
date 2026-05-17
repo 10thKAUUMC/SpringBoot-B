@@ -60,6 +60,10 @@ public class Review {
         return id;
     }
 
+    public Member getMember() {
+        return member;
+    }
+
     public Store getStore() {
         return store;
     }
@@ -70,5 +74,9 @@ public class Review {
 
     public String getContent() {
         return content;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 }

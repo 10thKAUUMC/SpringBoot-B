@@ -7,9 +7,11 @@ import com.example.umc10th.global.apiPayload.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +27,19 @@ public class MissionController {
 
     public MissionController(MissionService missionService) {
         this.missionService = missionService;
+    }
+
+    @PostMapping("/in-progress")
+    @Operation(
+            summary = "내가 진행중인 미션 조회",
+            description = "Request Body로 받은 회원 ID 기준 진행중 미션을 오프셋 기반 페이지네이션으로 조회합니다."
+    )
+    public ApiResponse<MissionResDTO.InProgressMissionPageResponse> getInProgressMissions(
+            @Valid @RequestBody MissionReqDTO.InProgressMissionListRequest request
+    ) {
+        MissionResDTO.InProgressMissionPageResponse response = missionService.getMyInProgressMissions(request);
+
+        return ApiResponse.onSuccess(response);
     }
 
     @GetMapping
@@ -59,7 +74,7 @@ public class MissionController {
             @RequestHeader(value = "Authorization", required = false) String authorization,
             @Parameter(description = "회원 미션 ID", example = "1")
             @PathVariable Long userMissionId,
-            @RequestBody MissionReqDTO.UpdateMissionStatusRequest request
+            @Valid @RequestBody MissionReqDTO.UpdateMissionStatusRequest request
     ) {
         MissionResDTO.UpdateMissionStatusResponse response = missionService.updateMissionStatus(userMissionId, request);
 
