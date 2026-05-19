@@ -1,0 +1,59 @@
+[33mcommit 136f3643ef31119c3bfd9f02a61a4f857e75ff80[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mUMC-8week[m[33m)[m
+Author: merakyb <bin030922@gmail.com>
+Date:   Sun May 17 20:37:39 2026 +0900
+
+    추가 : 폼 로그인 구현, 인증 실패 응답 통일
+
+[33mcommit 1f240a9f49b9b2505829796491d6c58054c7e763[m[33m ([m[1;31morigin2/UMC-7week[m[33m, [m[1;31morigin/UMC-7week[m[33m, [m[1;32mUMC-7week[m[33m)[m
+Author: merakyb <bin030922@gmail.com>
+Date:   Sun May 17 15:55:37 2026 +0900
+
+    추가 : 내가 생성한 리뷰들 조회하기(커서 기반)
+
+[33mcommit 1dd256cf04f5311f600086e69ee1599942ea454e[m
+Author: merakyb <bin030922@gmail.com>
+Date:   Sun May 17 14:49:56 2026 +0900
+
+    추가 : 진행 중인 미션 조회하기 기능
+
+[33mcommit 911b34a1a1fcb4b8e1d0130d9a6d2efd125c6b1e[m
+Author: merakyb <bin030922@gmail.com>
+Date:   Sat May 16 18:20:26 2026 +0900
+
+    추가 : 미션 생성, 가게 내 미션들 조회 기능
+
+[33mcommit fd5a9d5ca4e77fd8611b0d4871824666c414540c[m
+Author: merakyb <bin030922@gmail.com>
+Date:   Fri May 15 13:22:25 2026 +0900
+
+    피드백 반영 : DTO 전부 getter -> record로 통일, converter와 service 코드 수정
+
+[33mcommit ead415bb1a290af26a24840ed0fc0999153f5dee[m[33m ([m[1;31morigin2/UMC-6week[m[33m, [m[1;31morigin/UMC-6week[m[33m, [m[1;32mUMC-6week[m[33m)[m
+Author: merakyb <bin030922@gmail.com>
+Date:   Fri May 8 20:35:45 2026 +0900
+
+    6주차 - API 설계 기초 - JPA
+
+[33mcommit f9ffd3d9153aa18f50a33b54dbe22921d1a9fcde[m[33m ([m[1;31morigin2/main[m[33m, [m[1;31morigin2/UMC-5week[m[33m, [m[1;32mmain[m[33m, [m[1;32mUMC-5week[m[33m)[m
+Author: merakyb <123805042+merakyb@users.noreply.github.com>
+Date:   Fri May 1 18:40:47 2026 +0900
+
+    주차별 내용 추가
+
+[33mcommit e0ca298ebe79b93b749775dec25056509f804df1[m[33m ([m[1;31morigin/merakyb-chapter5[m[33m)[m
+Author: merakyb <bin030922@gmail.com>
+Date:   Fri May 1 18:03:01 2026 +0900
+
+    응답 통일 객체,에러 핸들링 객체 생성 및 도메인 컨트롤러 및 DTO 제작
+
+[33mcommit 1640a161584fe26ea1224bd57bc557bf24f8fc93[m[33m ([m[1;31morigin/merakyb[m[33m, [m[1;32mmerakyb[m[33m)[m
+Author: merakyb <bin030922@gmail.com>
+Date:   Sun Apr 5 22:35:32 2026 +0900
+
+    ERD 기반 도메인형 아키텍처 프로젝트 세팅
+
+[33mcommit e92f9d49419f610d7d7c251c4b356761da9cac00[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Lee Na gyeong <163131079+Niicka@users.noreply.github.com>
+Date:   Mon Mar 16 16:40:25 2026 +0900
+
+    Initial commit
